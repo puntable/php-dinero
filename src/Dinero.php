@@ -7,15 +7,21 @@ use GuzzleHttp\Exception\ServerException;
 use LasseRafn\Dinero\Builders\ContactBuilder;
 use LasseRafn\Dinero\Builders\CreditnoteBuilder;
 use LasseRafn\Dinero\Builders\InvoiceBuilder;
+use LasseRafn\Dinero\Builders\InvoiceBookBuilder;
 use LasseRafn\Dinero\Builders\PaymentBuilder;
 use LasseRafn\Dinero\Builders\ProductBuilder;
+use LasseRafn\Dinero\Builders\VoucherBuilder;
+use LasseRafn\Dinero\Builders\VoucherBookBuilder;
 use LasseRafn\Dinero\Exceptions\DineroRequestException;
 use LasseRafn\Dinero\Exceptions\DineroServerException;
 use LasseRafn\Dinero\Requests\ContactRequestBuilder;
 use LasseRafn\Dinero\Requests\CreditnoteRequestBuilder;
 use LasseRafn\Dinero\Requests\InvoiceRequestBuilder;
+use LasseRafn\Dinero\Requests\InvoiceBookRequestBuilder;
 use LasseRafn\Dinero\Requests\PaymentRequestBuilder;
 use LasseRafn\Dinero\Requests\ProductRequestBuilder;
+use LasseRafn\Dinero\Requests\VoucherRequestBuilder;
+use LasseRafn\Dinero\Requests\VoucherBookRequestBuilder;
 use LasseRafn\Dinero\Utils\Request;
 
 class Dinero
@@ -91,6 +97,21 @@ class Dinero
     public function invoices()
     {
         return new InvoiceRequestBuilder(new InvoiceBuilder($this->request));
+    }
+
+    public function invoiceBook($invoiceId)
+    {
+        return new InvoiceRequestBuilder(new InvoiceBookBuilder($this->request, "invoices/{$invoiceId}/book"));
+    }
+
+    public function vouchers()
+    {
+        return new VoucherRequestBuilder(new VoucherBuilder($this->request));
+    }
+
+    public function vouchersBook($voucherId)
+    {
+        return new VoucherBookRequestBuilder(new VoucherBookBuilder($this->request, "vouchers/manuel/{$voucherId}/book"));
     }
 
 	public function paymentsForInvoice($invoiceId)
